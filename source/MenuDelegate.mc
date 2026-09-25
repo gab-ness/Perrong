@@ -2,7 +2,8 @@ import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
 
-class PerrongMenuDelegate extends WatchUi.MenuInputDelegate {
+//response to a Menu selection
+class MenuDelegate extends WatchUi.MenuInputDelegate {
 
     function initialize() {
         MenuInputDelegate.initialize();

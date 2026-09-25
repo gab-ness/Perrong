@@ -1,13 +1,14 @@
 import Toybox.Graphics;
 import Toybox.WatchUi;
 
-class PerrongView extends WatchUi.View {
+//a View is an object that represents a page within an app
+class View extends WatchUi.View {
 
     function initialize() {
         View.initialize();
     }
 
-    // Load your resources here
+    // Load your resources here - Device context
     function onLayout(dc as Dc) as Void {
         setLayout(Rez.Layouts.MainLayout(dc));
     }
@@ -31,3 +32,6 @@ class PerrongView extends WatchUi.View {
     }
 
 }
+
+//view 1
+//- name, aimedArrivalTime, aimedDepartureTime, expectedArrivalTime, expectedDepartureTime, date, destinationDisplay, 
