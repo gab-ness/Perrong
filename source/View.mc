@@ -23,6 +23,20 @@ class View extends WatchUi.View {
     function onUpdate(dc as Dc) as Void {
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
+        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
+        dc.clear();
+        if(currentDeparture == null){
+            dc.drawText(dc.getWidth()/2, dc.getHeight()/2, Graphics.FONT_MEDIUM, "Laster...", Graphics.TEXT_JUSTIFY_CENTER);
+        }else{
+            //current time
+            //dc.drawText(dc.getWidth()/2, 155, Graphics.FONT_SMALL, currentDeparture[0], Graphics.TEXT_JUSTIFY_CENTER);
+            //departure
+            dc.drawText(dc.getWidth()/2, 125, Graphics.FONT_SMALL, "Avgang om " + timeLeft + timeUnit, Graphics.TEXT_JUSTIFY_CENTER);
+            //date
+            dc.drawText(dc.getWidth()/2, 155, Graphics.FONT_SMALL, displayDate, Graphics.TEXT_JUSTIFY_CENTER);
+            //time
+            dc.drawText(dc.getWidth()/2, 185, Graphics.FONT_SMALL, displayTime, Graphics.TEXT_JUSTIFY_CENTER);
+        }
     }
 
     // Called when this View is removed from the screen. Save the
