@@ -1,26 +1,3 @@
-//TODO:
-/*
-SETTINGS
-- select stops
-- save selections
-
-API
-On start:
-- request data based on selections
-- receive data
-- format data
-- store data
-
-View:
-- load data
-- display data
-
-Reload:
-- request data
-- receive data
-- format data
-- store data
-    */
 import Toybox.Application;
 import Toybox.Lang;
 import Toybox.WatchUi;
@@ -76,7 +53,7 @@ class API_Data{
                 formatData(destination, stopName, departureTime, departureDate);
             }
             //move pointer & timer logic to fire outside of api retrieval!
-            departurePointer();
+            handler.departurePointer();
             timeTracker();
         }else{
             System.println("Response failed, received code: " + responseCode);
@@ -90,18 +67,6 @@ class API_Data{
             //time < 30s, update every 5s?
             updateTimer.start(handler.method(:timerCallback), 20000, true);
         }
-    }
-
-    //handles displayed time info for next trip
-    function departurePointer() as Void{
-        currentDeparture = infoTable[counter] as Dictionary;
-        var departureHours = (currentDeparture["hours"] as String).toNumber();
-        var departureMinutes = (currentDeparture["minutes"] as String).toNumber();
-        var departureSeconds = (currentDeparture["seconds"] as String).toNumber();
-        var departureTime = departureHours * 60 + departureMinutes;
-        handler.setTimeLeft(departureTime, departureSeconds);
-        displayDate = currentDeparture["date"] as String;
-        displayTime = currentDeparture["time"] as String;
     }
 
     function formatData(endStop as String, stopName as String, rawTime as String, rawDate as String) as Void{
