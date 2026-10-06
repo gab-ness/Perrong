@@ -1,0 +1,44 @@
+import Toybox.Application;
+import Toybox.Lang;
+import Toybox.WatchUi;
+import Toybox.System;
+import Toybox.Communications;
+
+var currentDeparture as Dictionary?;
+var displayDate as String?;
+var displayTime as String?;
+
+class JourneyManager{
+    
+    var infoTable as Array = [];
+    var counter = 0;
+
+    function initialize() {
+    }
+    //handle no trips received
+    function departurePointer() as Void{
+        currentDeparture = infoTable[counter] as Dictionary;
+        var departureHours = (currentDeparture["hours"] as String).toNumber();
+        var departureMinutes = (currentDeparture["minutes"] as String).toNumber();
+        var departureSeconds = (currentDeparture["seconds"] as String).toNumber();
+        var departureTime = departureHours * 60 + departureMinutes;
+        timers.setTimeLeft(departureTime, departureSeconds);
+        displayDate = currentDeparture["date"] as String;
+        displayTime = currentDeparture["time"] as String;
+    }
+
+    //set infoTable
+    function setInfoTable(sortedStops as Dictionary) as Void{
+        infoTable.add(sortedStops);
+    }
+    //handle counter
+    function setCounter() as Void{
+        if(counter < infoTable.size() - 1){
+            counter++;
+        }else{
+            //wraparound logic
+            counter = 0;
+        }
+        System.println("counter: " + counter);
+    }
+}

@@ -5,17 +5,8 @@ import Toybox.System;
 import Toybox.Communications;
 using Toybox.Timer;
 
-public var currentDeparture as Dictionary?;
-public var infoTable as Array = [];
 var currentMinutes as Number?;
 
-//date & time updated each time new Vehicle indexed - fetched by View
-var displayDate as String?;
-var displayTime as String?;
-
-var updateTimer as Timer.Timer?;
-//declare shared TimeHandler
-var handler = new TimeHandler();
 class API_Data{
     function initialize() {
         makeRequest();
@@ -53,19 +44,19 @@ class API_Data{
                 formatData(destination, stopName, departureTime, departureDate);
             }
             //move pointer & timer logic to fire outside of api retrieval!
-            handler.departurePointer();
+            journey.departurePointer();
             timeTracker();
         }else{
             System.println("Response failed, received code: " + responseCode);
         }
     }
 
-    function timeTracker(){
+    function timeTracker() as Void{
         WatchUi.requestUpdate();
         if(updateTimer == null){
             updateTimer = new Timer.Timer();
             //time < 30s, update every 5s?
-            updateTimer.start(handler.method(:timerCallback), 20000, true);
+            updateTimer.start(timers.method(:timerCallback), 20000, true);
         }
     }
 
@@ -73,7 +64,7 @@ class API_Data{
         var hours = rawTime.substring(11, 13);
         var minutes = rawTime.substring(14, 16);
         var seconds = rawTime.substring(17, 19);
-        var date = handler.styleDate(rawDate);
+        var date = options.styleDate(rawDate);
         var scheduledTime = hours + ":" + minutes;
         //retrieve data from onResponse
         var stopDict = {
@@ -85,6 +76,6 @@ class API_Data{
             "seconds" => seconds,
             "date" => date
         };
-        infoTable.add(stopDict);
+        journey.setInfoTable(stopDict);
     }
 }
