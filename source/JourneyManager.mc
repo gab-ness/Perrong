@@ -28,6 +28,7 @@ class JourneyManager{
             timers.startCountdown(totalSec);
             displayDate = currentDeparture["date"] as String;
             displayTime = currentDeparture["time"] as String;
+            System.println(currentDeparture["destination"]);
         }
     }
 

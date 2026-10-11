@@ -14,7 +14,7 @@ var displayCountdown as Number?;
 
 var countdownSec;
 var secondTicker as Timer.Timer?;
-
+var lastMinuteTimer as Timer.Timer?;
 var refreshTimer as Timer.Timer?;
 
 class TimerManager{
@@ -37,12 +37,18 @@ class TimerManager{
         countdownSec = secondsLeft;
         if(secondsLeft <= 0){
             resetTimers();
-        }else if(secondsLeft >= 1 && secondsLeft < 60){
+        }else if(secondsLeft >= 1 && secondsLeft <= 60){
             onLastMinute();
         }else{
             //integer division discards decimal; ensures correct minute counting
             displayCountdown = (secondsLeft + 59) / 60;
             options.setTimeUnit("min");
+            System.println("currently displays Minutes");
+            if(lastMinuteTimer != null){
+                lastMinuteTimer.stop();
+            }
+            lastMinuteTimer = new Timer.Timer();
+            lastMinuteTimer.start(method(:onRefresh), (secondsLeft - 60) * 1000, false);
         }
     }
 
@@ -63,6 +69,7 @@ class TimerManager{
         //update minuteCountdown after decrementing
         displayCountdown = countdownSec - 1;
         options.setTimeUnit("sec");
+        System.println("currently displays Seconds");
         countdownSec = displayCountdown;
         System.println(displayCountdown);
         WatchUi.requestUpdate();
@@ -72,6 +79,7 @@ class TimerManager{
     }
 
 // reset timers, move to next departure and set displayed time unit to minutes
+// logic needs improvements
     function resetTimers() as Void{
         journey.setCounter();
         if(secondTicker != null){
@@ -79,6 +87,9 @@ class TimerManager{
         }
         if(refreshTimer != null){
             refreshTimer.stop();
+        }
+        if(lastMinuteTimer != null){
+            lastMinuteTimer.stop();
         }
         refreshTimer.start(timers.method(:onRefresh), 20000, true);
         journey.departurePointer();

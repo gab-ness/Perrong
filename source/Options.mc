@@ -2,7 +2,7 @@ import Toybox.Application;
 import Toybox.Lang;
 import Toybox.System;
 
-var timeUnit = " minutt";
+var timeUnit = " minutter";
 class Options{
     function initialize() {
     }
@@ -17,11 +17,11 @@ class Options{
     }
 
     //(relocate out of Options) handle Hours
-    function setTimeUnit(unit as String?) as Void{
-        if(unit == "min"){
+    function setTimeUnit(unit as String) as Void{
+        if(unit.equals("min")){
             timeUnit = " minutter";
         }
-        if(unit == "sec"){
+        if(unit.equals("sec")){
             timeUnit = " sekunder";
         }
     }
