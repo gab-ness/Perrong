@@ -29,13 +29,15 @@ class View extends WatchUi.View {
             dc.drawText(dc.getWidth()/2, dc.getHeight()/2, Graphics.FONT_MEDIUM, "Laster...", Graphics.TEXT_JUSTIFY_CENTER);
         }else{
             //current time
-            //dc.drawText(dc.getWidth()/2, 155, Graphics.FONT_SMALL, currentDeparture[0], Graphics.TEXT_JUSTIFY_CENTER);
+            dc.drawText(dc.getWidth()/2, 10, Graphics.FONT_SMALL, currentTime, Graphics.TEXT_JUSTIFY_CENTER);
+            //transport direction
+            dc.drawText(dc.getWidth()/2, 80, Graphics.FONT_SMALL, "Retning: " + displayEndStop, Graphics.TEXT_JUSTIFY_CENTER);
             //departure
             dc.drawText(dc.getWidth()/2, 125, Graphics.FONT_SMALL, "Avgang om " + displayCountdown + timeUnit, Graphics.TEXT_JUSTIFY_CENTER);
             //date
             dc.drawText(dc.getWidth()/2, 155, Graphics.FONT_SMALL, displayDate, Graphics.TEXT_JUSTIFY_CENTER);
             //time
-            dc.drawText(dc.getWidth()/2, 185, Graphics.FONT_SMALL, displayTime, Graphics.TEXT_JUSTIFY_CENTER);
+            dc.drawText(dc.getWidth()/2, 190, Graphics.FONT_SMALL, "avgang kl: " + displayTime, Graphics.TEXT_JUSTIFY_CENTER);
         }
     }
 

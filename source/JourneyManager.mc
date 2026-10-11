@@ -7,6 +7,7 @@ import Toybox.Communications;
 var currentDeparture as Dictionary?;
 var displayDate as String?;
 var displayTime as String?;
+var displayEndStop as String?;
 
 class JourneyManager{
     
@@ -28,7 +29,7 @@ class JourneyManager{
             timers.startCountdown(totalSec);
             displayDate = currentDeparture["date"] as String;
             displayTime = currentDeparture["time"] as String;
-            System.println(currentDeparture["destination"]);
+            displayEndStop = currentDeparture["destination"] as String;
         }
     }
 

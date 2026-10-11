@@ -16,6 +16,7 @@ var countdownSec;
 var secondTicker as Timer.Timer?;
 var lastMinuteTimer as Timer.Timer?;
 var refreshTimer as Timer.Timer?;
+var currentTime as String?;
 
 class TimerManager{
     function initialize() {
@@ -25,6 +26,13 @@ class TimerManager{
     function getNowSec() as Void{
         var timeNow = System.getClockTime();
         nowSec = (timeNow.hour * 3600) + (timeNow.min * 60 ) + timeNow.sec;
+    }
+
+    //set current time in View
+    function setCurrentTime() as Void{
+        //temporary solution!
+        var clockTime = System.getClockTime();
+        currentTime = clockTime.hour + ":" + clockTime.min;
     }
 
     // work out secs left to a departure and prepare; next trip, sec countdown, or time unit displayed
@@ -99,6 +107,7 @@ class TimerManager{
     public function onRefresh() as Void{
         startCountdown(departureSec);
         System.println("time left: " + displayCountdown);
+        setCurrentTime();
         WatchUi.requestUpdate();
     }
 }
