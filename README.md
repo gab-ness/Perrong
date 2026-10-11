@@ -2,7 +2,7 @@
 A Garmin watch application that shows a live countdown to the next public transport departure from a Norwegian stop, so you can check your bus at a glance without pulling out your phone.
 
 ## Demo
-![Departure view](documents/screenshot.png)
+![Departure view](documents/Screenshot.png)
 
 ## Features
 - Real-time departures from Entur's Journey Planner.
