@@ -4,6 +4,8 @@ A Garmin watch application that shows a live countdown to the next public transp
 ## Demo
 ![Departure view](documents/Screenshot.png)
 
+![Departure countdown](documents/demonstration.gif)
+
 ## Features
 - Real-time departures from Entur's Journey Planner.
 - Countdown in minutes that automatically switches to seconds when the departure is within its last minute.
