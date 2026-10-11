@@ -22,8 +22,10 @@ class JourneyManager{
             var departureHours = (currentDeparture["hours"] as String).toNumber();
             var departureMinutes = (currentDeparture["minutes"] as String).toNumber();
             var departureSeconds = (currentDeparture["seconds"] as String).toNumber();
-            var departureTime = departureHours * 60 + departureMinutes;
-            timers.setTimeLeft(departureTime, departureSeconds);
+            var totalSec = (departureHours * 3600) + (departureMinutes * 60) + departureSeconds;
+            //time till departure
+            //change var into 1 combined (?)
+            timers.startCountdown(totalSec);
             displayDate = currentDeparture["date"] as String;
             displayTime = currentDeparture["time"] as String;
         }

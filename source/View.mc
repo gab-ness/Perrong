@@ -31,7 +31,7 @@ class View extends WatchUi.View {
             //current time
             //dc.drawText(dc.getWidth()/2, 155, Graphics.FONT_SMALL, currentDeparture[0], Graphics.TEXT_JUSTIFY_CENTER);
             //departure
-            dc.drawText(dc.getWidth()/2, 125, Graphics.FONT_SMALL, "Avgang om " + timeLeft + timeUnit, Graphics.TEXT_JUSTIFY_CENTER);
+            dc.drawText(dc.getWidth()/2, 125, Graphics.FONT_SMALL, "Avgang om " + displayCountdown + timeUnit, Graphics.TEXT_JUSTIFY_CENTER);
             //date
             dc.drawText(dc.getWidth()/2, 155, Graphics.FONT_SMALL, displayDate, Graphics.TEXT_JUSTIFY_CENTER);
             //time
@@ -46,6 +46,3 @@ class View extends WatchUi.View {
     }
 
 }
-
-//view 1
-//- name, aimedArrivalTime, aimedDepartureTime, expectedArrivalTime, expectedDepartureTime, date, destinationDisplay, 

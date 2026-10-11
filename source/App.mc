@@ -37,5 +37,3 @@ class App extends Application.AppBase {
 function getApp() as App {
     return Application.getApp() as App;
 }
-//TODO:
-//create API_Data object, implement onUpdate

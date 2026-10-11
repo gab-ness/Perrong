@@ -1,76 +1,93 @@
+//TODO
+/*
+- handle cases where a bus is delayed so Journey is updated with new time, if possible
+- refactor methods to be more modular and readable; currently overly reliant on calling eachother
+*/
 import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
 using Toybox.Timer;
 
-var departureMinutes as Number?;
-var currentTime as Number?;
-var timeLeft as Number?;
+var departureSec as Number?;
+var nowSec as Number?;
+var displayCountdown as Number?;
 
-var minuteCountdown = 60;
-var minuteTimer as Timer.Timer?;
+var countdownSec;
 var secondTicker as Timer.Timer?;
 
-var updateTimer as Timer.Timer?;
+var refreshTimer as Timer.Timer?;
 
 class TimerManager{
     function initialize() {
     }
 
-    function getTime() as Void{
+    // store current clock time as sec. since midnight
+    function getNowSec() as Void{
         var timeNow = System.getClockTime();
-        currentTime = timeNow.hour * 60 + timeNow.min;
+        nowSec = (timeNow.hour * 3600) + (timeNow.min * 60 ) + timeNow.sec;
     }
 
-    public function setTimeLeft(currentMinutes as Number, currentSeconds as Number?) as Void{
-        departureMinutes = currentMinutes;
-        getTime();
-        timeLeft = currentMinutes - currentTime;
-        //change view to seconds when 1 min left
-        var secondsLeft = timeLeft * 60;
-        var secondsRemaining = secondsLeft - 60;
-        if(secondsRemaining >= 0 && minuteTimer == null){
-            minuteTimer = new Timer.Timer();
-            minuteTimer.start(method(:oneMinuteCallback), secondsRemaining * 1000, false);
-        }
-    }
-
-//merge timer logic
-    function oneMinuteCallback() as Void{
-        if(updateTimer != null){
-            updateTimer.stop();
-        }
-        //possibly recreated each second
-        secondTicker = new Timer.Timer();
-        secondTicker.start(method(:secondsCallback), 1000, true);
-        options.setTimeUnit("sec");
-    }
-
-    function secondsCallback() as Void{
-        //update minuteCountdown after decrementing
-        timeLeft = minuteCountdown - 1;
-        minuteCountdown = timeLeft;
-        System.println(timeLeft);
-        WatchUi.requestUpdate();
-        if(minuteCountdown == 0){
-            journey.setCounter();
-            minuteCountdown = 60;
-            secondTicker.stop();
-            updateTimer.start(timers.method(:timerCallback), 20000, true);
-            minuteTimer = null;
-            journey.departurePointer();
+    // work out secs left to a departure and prepare; next trip, sec countdown, or time unit displayed
+    public function startCountdown(currentSeconds as Number?) as Void{
+        departureSec = currentSeconds;
+        getNowSec();
+        //calculate seconds left - should be revised
+        var secondsLeft = (currentSeconds - nowSec);
+        System.println("current secondsLeft value (seconds): " + secondsLeft);
+        countdownSec = secondsLeft;
+        if(secondsLeft <= 0){
+            resetTimers();
+        }else if(secondsLeft >= 1 && secondsLeft < 60){
+            onLastMinute();
+        }else{
+            //integer division discards decimal; ensures correct minute counting
+            displayCountdown = (secondsLeft + 59) / 60;
             options.setTimeUnit("min");
         }
     }
 
-    public function timerCallback() as Void{
-        setTimeLeft(departureMinutes, null);
-        WatchUi.requestUpdate();
+// on last minute: stop countdown to display seconds till departure
+    function onLastMinute() as Void{
+        if(refreshTimer != null){
+            refreshTimer.stop();
+        }
+        if(secondTicker != null){
+            secondTicker.stop();
+        }
+        secondTicker = new Timer.Timer();
+        secondTicker.start(method(:perSecond), 1000, true);
     }
 
-    //naming to avoid confusion with formatData
-    //styles date after user choice
+// run last 60 seconds of a trip, then call resetTimers
+    function perSecond() as Void{
+        //update minuteCountdown after decrementing
+        displayCountdown = countdownSec - 1;
+        options.setTimeUnit("sec");
+        countdownSec = displayCountdown;
+        System.println(displayCountdown);
+        WatchUi.requestUpdate();
+        if(countdownSec <= 0){
+            resetTimers();
+        }
+    }
 
+// reset timers, move to next departure and set displayed time unit to minutes
+    function resetTimers() as Void{
+        journey.setCounter();
+        if(secondTicker != null){
+            secondTicker.stop();
+        }
+        if(refreshTimer != null){
+            refreshTimer.stop();
+        }
+        refreshTimer.start(timers.method(:onRefresh), 20000, true);
+        journey.departurePointer();
+    }
 
-
+// runs every 20s, recalc. countdown for current departure and update display
+    public function onRefresh() as Void{
+        startCountdown(departureSec);
+        System.println("time left: " + displayCountdown);
+        WatchUi.requestUpdate();
+    }
 }

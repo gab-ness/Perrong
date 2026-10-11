@@ -38,14 +38,13 @@ class API_Data{
                 var line = receivedLines[i] as Dictionary;
                 var destDisplay = line["destinationDisplay"] as Dictionary;
                 var destination = destDisplay["frontText"] as String;
-                //merge lines below!
                 var departureTime = line["expectedDepartureTime"];
                 var departureDate = line["expectedDepartureTime"];
                 formatData(destination, stopName, departureTime, departureDate);
             }
             //move pointer & timer logic to fire outside of api retrieval!
-            journey.departurePointer();
             timeTracker();
+            journey.departurePointer();
         }else{
             System.println("Response failed, received code: " + responseCode);
         }
@@ -53,10 +52,10 @@ class API_Data{
 
     function timeTracker() as Void{
         WatchUi.requestUpdate();
-        if(updateTimer == null){
-            updateTimer = new Timer.Timer();
+        if(refreshTimer == null){
+            refreshTimer = new Timer.Timer();
             //time < 30s, update every 5s?
-            updateTimer.start(timers.method(:timerCallback), 20000, true);
+            refreshTimer.start(timers.method(:onRefresh), 20000, true);
         }
     }
 
@@ -66,7 +65,6 @@ class API_Data{
         var seconds = rawTime.substring(17, 19);
         var date = options.styleDate(rawDate);
         var scheduledTime = hours + ":" + minutes;
-        //retrieve data from onResponse
         var stopDict = {
             "destination" => endStop,
             "stop" => stopName,
