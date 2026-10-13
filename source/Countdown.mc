@@ -7,6 +7,8 @@ import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
 using Toybox.Timer;
+//module
+using TimeUtils;
 
 var departureSec as Number?;
 var nowSec as Number?;
@@ -39,6 +41,7 @@ class Countdown{
     public function startCountdown(currentSeconds as Number?) as Void{
         departureSec = currentSeconds;
         getNowSec();
+        setCurrentTime();
         //calculate seconds left - should be revised
         var secondsLeft = (currentSeconds - nowSec);
         System.println("current secondsLeft value (seconds): " + secondsLeft);
@@ -107,7 +110,6 @@ class Countdown{
     public function onRefresh() as Void{
         startCountdown(departureSec);
         System.println("time left: " + displayCountdown);
-        setCurrentTime();
         WatchUi.requestUpdate();
     }
 }

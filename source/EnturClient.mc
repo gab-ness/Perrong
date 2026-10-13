@@ -38,15 +38,23 @@ class EnturClient{
             for(var i = 0; i < receivedLines.size(); i++){
                 var line = receivedLines[i] as Dictionary;
                 //test vars
+                    //formatted
                 var realT = line["realtime"] as Boolean;
+                    //not formatted
                 var plannedDepT = line["aimedDepartureTime"];
+                    //formatted
                 var cancelledTrip = line["cancellation"];
+                    //not formatted
                 var quayId = line["quay"].values();
                 System.println("Real Time: " + realT + " Original Dep Time: " + plannedDepT + " Cancelled (bool): " + cancelledTrip + " Quay IDs: " + quayId);
                 //test end
+                    //not formatted
                 var destDisplay = line["destinationDisplay"] as Dictionary;
+                    //not formatted
                 var destination = destDisplay["frontText"] as String;
+                    //not formatted
                 var departureTime = line["expectedDepartureTime"];
+                    //not formatted
                 var departureDate = line["expectedDepartureTime"];
                 formatData(destination, stopName, departureTime, departureDate);
             }

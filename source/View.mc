@@ -1,5 +1,6 @@
 import Toybox.Graphics;
 import Toybox.WatchUi;
+import TimeUtils;
 
 //a View is an object that represents a page within an app
 class View extends WatchUi.View {
@@ -29,7 +30,7 @@ class View extends WatchUi.View {
             dc.drawText(dc.getWidth()/2, dc.getHeight()/2, Graphics.FONT_MEDIUM, "Laster...", Graphics.TEXT_JUSTIFY_CENTER);
         }else{
             //current time
-            dc.drawText(dc.getWidth()/2, 10, Graphics.FONT_SMALL, currentTime, Graphics.TEXT_JUSTIFY_CENTER);
+            dc.drawText(dc.getWidth()/2, 10, Graphics.FONT_SMALL, TimeUtils.getTime(), Graphics.TEXT_JUSTIFY_CENTER);
             //transport direction
             dc.drawText(dc.getWidth()/2, 80, Graphics.FONT_SMALL, "Retning: " + displayEndStop, Graphics.TEXT_JUSTIFY_CENTER);
             //departure
