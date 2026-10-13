@@ -9,7 +9,7 @@ var displayDate as String?;
 var displayTime as String?;
 var displayEndStop as String?;
 
-class JourneyManager{
+class DepartureList{
     
     var infoTable as Array = [];
     var counter = 0;

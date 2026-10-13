@@ -7,7 +7,7 @@ using Toybox.Timer;
 
 var currentMinutes as Number?;
 
-class API_Data{
+class EnturClient{
     function initialize() {
         makeRequest();
     }

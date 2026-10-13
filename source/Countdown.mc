@@ -18,7 +18,7 @@ var lastMinuteTimer as Timer.Timer?;
 var refreshTimer as Timer.Timer?;
 var currentTime as String?;
 
-class TimerManager{
+class Countdown{
     function initialize() {
     }
 

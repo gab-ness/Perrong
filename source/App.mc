@@ -3,9 +3,9 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.System;
 
-var data as API_Data?;
-var journey as JourneyManager?;
-var timers as TimerManager?;
+var data as EnturClient?;
+var journey as DepartureList?;
+var timers as Countdown?;
 var options as Options?;
 //manage the life cycle of an app
 class App extends Application.AppBase {
@@ -16,9 +16,9 @@ class App extends Application.AppBase {
 
     // onStart() is called on application start up
     function onStart(state as Dictionary?) as Void {
-        data = new API_Data();
-        journey = new JourneyManager();
-        timers = new TimerManager();
+        data = new EnturClient();
+        journey = new DepartureList();
+        timers = new Countdown();
         options = new Options();
     }
 
