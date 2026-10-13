@@ -14,7 +14,8 @@ class API_Data{
     function makeRequest(){
         var url = "https://api.entur.io/journey-planner/v3/graphql";
         //placeholder
-        var params = {"query" => "query ($id: String!){ stopPlace(id: $id) {name id estimatedCalls {expectedDepartureTime destinationDisplay {frontText }serviceJourney {line {publicCode transportMode}}}}}", "variables" => {"id" => "NSR:StopPlace:6208"}};
+        //added: realtime , aimedDepartureTime cancellation , quay {id publicCode situations{ situationNumber summary { language value}
+        var params = {"query" => "query ($id: String!){ stopPlace(id: $id) {name id estimatedCalls {realtime aimedDepartureTime expectedDepartureTime cancellation destinationDisplay {frontText } quay {id publicCode situations{ situationNumber summary { language value}}} serviceJourney {line {publicCode transportMode}}}}}", "variables" => {"id" => "NSR:StopPlace:6208"}};
         var options = {
             :method => Communications.HTTP_REQUEST_METHOD_POST,
             :headers => {"ET-Client-Name" => "nesskom-applikasjon", "Content-Type" => Communications.REQUEST_CONTENT_TYPE_JSON},
@@ -36,6 +37,13 @@ class API_Data{
             var receivedLines = stopDetails["estimatedCalls"] as Array;
             for(var i = 0; i < receivedLines.size(); i++){
                 var line = receivedLines[i] as Dictionary;
+                //test vars
+                var realT = line["realtime"] as Boolean;
+                var plannedDepT = line["aimedDepartureTime"];
+                var cancelledTrip = line["cancellation"];
+                var quayId = line["quay"].values();
+                System.println("Real Time: " + realT + " Original Dep Time: " + plannedDepT + " Cancelled (bool): " + cancelledTrip + " Quay IDs: " + quayId);
+                //test end
                 var destDisplay = line["destinationDisplay"] as Dictionary;
                 var destination = destDisplay["frontText"] as String;
                 var departureTime = line["expectedDepartureTime"];
