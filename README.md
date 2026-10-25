@@ -30,3 +30,5 @@ Working prototype, with a currently hardcoded stop.
 - [ ] Clear screen states for loading / no departures / no connection
 - [ ] Move display UI formatting into a dedicated class
 - [ ] Improve UI visuals and reduce clutter
+
+Refactor in progress: moving to Moment-based countdown and cleaner class structure.
